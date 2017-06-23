@@ -20,6 +20,7 @@
     // 这时需要检查设置的值和计算后的值是否一样，
     // 不一样的话重新设置正确的值
     var getCPTStyle = window.getComputedStyle;
+    // 十进制转化
     var fontSize = parseFloat(html.style.fontSize, 10);
     var computedFontSize = parseFloat(getCPTStyle(html)['font-size'], 10);
     if (getCPTStyle && Math.abs(fontSize - computedFontSize) >= 1) {
