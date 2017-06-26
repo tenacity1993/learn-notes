@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// 添加一行代码 能接收热更新
+// 添加语句  接收热更新  要添加在上面语句的下面
 app.use(require('connect-livereload')());
 app.use('/', index);
 app.use('/users', users);
