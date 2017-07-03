@@ -8703,101 +8703,65 @@
 
 	'use strict';
 
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	{
-	  // 已经有默认值的参数后面的参数必须都有默认值
-	  var test = function test(x) {
-	    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'world';
-
-	    console.log('默认值', x, y);
-	  };
-
-	  test('hello');
-	  test('hello', 'shanghai');
+	  //声明
+	  // a1 a2 永远不可能相等
+	  var a1 = Symbol();
+	  var a2 = Symbol();
+	  console.log(a1 === a2);
+	  // 先检查该key值是否全局注册过
+	  var a3 = Symbol.for('a3');
+	  var a4 = Symbol.for('a3');
+	  console.log(a3 === a4);
 	}
 	{
-	  var test2 = function test2(x) {
-	    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
+	  var _obj;
 
-	    console.log('作用域', x, y); // kill kill
-	  };
+	  var _a = Symbol.for('abc');
+	  var obj = (_obj = {}, _defineProperty(_obj, _a, '123'), _defineProperty(_obj, 'abc', 345), _defineProperty(_obj, 'c', 456), _obj);
+	  console.log(obj);
+	  // 通过 forin、letof 拿不到属性
+	  //{abc: 345, c: 456, Symbol(abc): "123"}
 
-	  // undefined undefined
-	  var test23 = function test23(c) {
-	    var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
 
-	    console.log(c, y);
-	  };
+	  try {
+	    for (var _iterator = Object.entries(obj)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var _step$value = _slicedToArray(_step.value, 2),
+	          key = _step$value[0],
+	          value = _step$value[1];
 
-	  var x = 'test';
-
-	  test2('kill');
-	  test2();
-	  test23('kill');
-	}
-	{
-	  var test3 = function test3() {
-	    for (var _len = arguments.length, arg = Array(_len), _key = 0; _key < _len; _key++) {
-	      arg[_key] = arguments[_key];
+	      console.log('let of', [key, value]);
 	    }
-
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
 	    try {
-	      for (var _iterator = arg[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	        var v = _step.value;
-
-	        console.log('rest', v);
+	      if (!_iteratorNormalCompletion && _iterator.return) {
+	        _iterator.return();
 	      }
-	    } catch (err) {
-	      _didIteratorError = true;
-	      _iteratorError = err;
 	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion && _iterator.return) {
-	          _iterator.return();
-	        }
-	      } finally {
-	        if (_didIteratorError) {
-	          throw _iteratorError;
-	        }
+	      if (_didIteratorError) {
+	        throw _iteratorError;
 	      }
 	    }
-	  };
+	  }
 
-	  test3(1, 2, 3, 4, 'a');
+	  Object.getOwnPropertySymbols(obj).forEach(function (item) {
+	    console.log(obj[item]);
+	  });
+
+	  Reflect.ownKeys(obj).forEach(function (item) {
+	    console.log('ownKeys', item, obj[item]);
+	  });
 	}
-	{
-	  var _console, _console2;
-
-	  (_console = console).log.apply(_console, [1, 2, 4]);
-	  (_console2 = console).log.apply(_console2, ['a'].concat([1, 2, 4]));
-	}
-	{
-	  var arrow = function arrow(v) {
-	    return v * 2;
-	  };
-	  var arrow2 = function arrow2() {
-	    return 5;
-	  };
-	  console.log('arrow', arrow(3));
-	  console.log('arrow2', arrow2());
-	}
-	{
-	  // 尾调用  提升性能  嵌套函数 建议使用尾调用
-	  var tail = function tail(x) {
-	    console.log('tail', x);
-	  };
-
-	  var fx = function fx(x) {
-	    return tail(x);
-	  };
-
-	  fx(123);
-	}
-
-	//
 
 /***/ })
 /******/ ]);
