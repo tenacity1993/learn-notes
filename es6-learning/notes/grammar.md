@@ -808,5 +808,209 @@ function last(){
 
 ### 类和对象
 ```javascript
+{
+  // 基本定义和生成实例
+  class Parent{
+    constructor(name = 'mukewang'){
+      this.name = name
+    }
+  }
+  let v_parent = new Parent('v')
+  console.log('构造函数实例', v_parent);
+}
+{
+  //继承
+  class Parent{
+    constructor(name = 'mukewang'){
+      this.name = name
+    }
+  }
+  class Child extends Parent{
+
+  }
+  console.log('继承', new Child());
+}
+
+{
+  //继承传递参数
+  class Parent{
+    constructor(name = 'mukewang'){
+      this.name = name
+    }
+  }
+  class Child extends Parent{
+    constructor(name = 'child'){
+      super(name);// 子类向父类传递参数  要放在第一行
+      this.type = 'child' //调用this 要放在super之后
+    }
+  }
+  console.log('继承', new Child('hello'));
+}
+
+{
+  // getter  setter
+  class Parent{
+    constructor(name = 'mukewang'){
+      this.name = name
+    }
+    // 这里是属性  不是函数
+    get longName(){
+      return 'mk' + this.name
+    }
+    set longName(value){
+      this.name = value
+    }
+  }
+  let v = new Parent()
+  console.log('getter', v.longName);
+  v.longName = 'hello'
+  console.log('setter', v.longName);
+}
+
+{
+  // 静态方法
+  class Parent{
+    constructor(name = 'mukewang'){
+      this.name = name
+    }
+    // 静态方法通过类调用 而不是通过实例调用
+    static tell(){
+      console.log('tell');
+    }
+  }
+  Parent.tell()
+}
+{
+  // 静态属性
+  class Parent{
+    constructor(name = 'mukewang'){
+      this.name = name
+    }
+    // 静态方法通过类调用 而不是通过实例调用
+    static tell(){
+      console.log('tell');
+    }
+  }
+  Parent.type = 'test'
+  console.log('静态属性', Parent.type);
+}
+
+```
+
+### promise
+```javascript
+{
+  let ajax = function(callback){
+    console.log('start');
+    setTimeout(function(){
+      callback && callback.call()
+    }, 1000)
+  }
+  ajax(function(){
+    console.log('timeout1');
+  })
+}
+{
+  let ajax = function(){
+    console.log('start2');
+    // resolve：执行下一步操作 reject :中断当前操作
+    return new Promise(function(resolve, reject){
+      setTimeout(function(){
+        resolve()
+      }, 1000)
+    })
+  }
+  ajax().then(function(){
+    console.log('promise', 'timeout2');
+  })
+}
+{
+  let ajax = function(){
+    console.log('start3');
+    // resolve：执行下一步操作 reject :中断当前操作
+    return new Promise(function(resolve, reject){
+      setTimeout(function(){
+        resolve()
+      }, 1000)
+    })
+  }
+  ajax().then(function(){
+    return new Promise(function(resolve, reject){
+      setTimeout(function(){
+        resolve()
+      }, 2000)
+    })
+  }).then(function(){
+    console.log('timeout3');
+  })
+}
+{
+  let ajax = function(num){
+    console.log('start4');
+    return new Promise(function(resolve, reject){
+      if(num > 5){
+        resolve()
+      } else {
+        throw new Error('出错了')
+      }
+    })
+  }
+  ajax(6).then(function(){
+    console.log('log', 6);
+  }).catch(function(err){//  捕获错误
+    console.log('catch', err);
+  })
+}
+{
+  // 所有图片加载完成再添加到页面
+  function loadImg(src){
+    return new Promise((resolve, rejec)=>{
+      let img = document.createElement('img')
+      img.src = src
+      img.onload = function(){
+        resolve(img)
+      }
+      img.onerror = function(err){
+        reject(err)
+      }
+    })
+  }
+  function showImgs(imgs){
+    imgs.forEach(function(img){
+      document.body.appendChild(img)
+    })
+  }
+  // 把多个promise实例 当作一个promise实例
+  Promise.all([
+    loadImg('http://i4.buimg.com/567571/df1ef0720bea6832.png'),
+    loadImg('http://i4.buimg.com/567571/df1ef0720bea6832.png'),
+    loadImg('http://i4.buimg.com/567571/df1ef0720bea6832.png')
+  ]).then(showImgs)
+}
+{
+  // 有一个图片加载完成就显示
+  function loadImg(src){
+    return new Promise((resolve, rejec)=>{
+      let img = document.createElement('img')
+      img.src = src
+      img.onload = function(){
+        resolve(img)
+      }
+      img.onerror = function(err){
+        reject(err)
+      }
+    })
+  }
+  function showImgs(img){
+    let p = document.createElement('p')
+    p.appendChild(img)
+    document.body.appendChild(p)
+  }
+  Promise.race([
+    loadImg('http://i4.buimg.com/567571/df1ef0720bea6832.png'),
+    loadImg('http://i4.buimg.com/567571/df1ef0720bea6832.png'),
+    loadImg('http://i4.buimg.com/567571/df1ef0720bea6832.png')
+  ]).then(showImgs)
+}
 
 ```
