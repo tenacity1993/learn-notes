@@ -8929,6 +8929,53 @@
 	    return item.t;
 	  });
 	  console.info('set-array', set_exist, _array_exist);
+	  // 改
+	  set.forEach(function (item) {
+	    return item.t ? item.t = 2 : '';
+	  });
+	  _array.forEach(function (item) {
+	    return item.t ? item.t = 2 : '';
+	  });
+	  console.log('set-array-modify', set, _array);
+	  // 删
+	  set.forEach(function (item) {
+	    return item.t ? set.delete(item) : '';
+	  });
+	  var _index = _array.findIndex(function (item) {
+	    return item.t;
+	  });
+	  _array.splice(_index, 1);
+	  console.log('set-array-empty', set, _array);
+	}
+	{
+	  // Map Set Object
+	  var item = { t: 1 };
+	  var _map3 = new Map();
+	  var _set = new Set();
+	  var obj = {};
+
+	  // 增
+	  _map3.set('t', 1);
+	  _set.add(item);
+	  obj['t'] = 1;
+	  console.log('map-set-obj', obj, _map3, _set);
+	  //  查
+	  console.log({
+	    map_exist: _map3.has('t'),
+	    set_exist: _set.has(item),
+	    obj_exist: 't' in obj
+	  });
+	  // 改
+	  _map3.set('t', 2);
+	  item.t = 2; // 存储的是引用
+	  obj['t'] = 2;
+	  console.log('map-set-obj', obj, _map3, _set);
+
+	  // 删除
+	  _map3.delete('t');
+	  _set.delete(item);
+	  delete obj['t'];
+	  console.log('map-set-obj', obj, _map3, _set);
 	}
 
 /***/ })
