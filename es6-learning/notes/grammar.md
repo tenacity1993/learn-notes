@@ -924,7 +924,7 @@ function last(){
     console.log('promise', 'timeout2');
   })
 }
-{
+{``
   let ajax = function(){
     console.log('start3');
     // resolve：执行下一步操作 reject :中断当前操作
@@ -1012,5 +1012,10 @@ function last(){
     loadImg('http://i4.buimg.com/567571/df1ef0720bea6832.png')
   ]).then(showImgs)
 }
+
+```
+
+### iterator
+```javascript
 
 ```
