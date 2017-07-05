@@ -1063,3 +1063,5 @@ function last(){
 }
 
 ```
+### generator
+- 异步编程的解决方案
