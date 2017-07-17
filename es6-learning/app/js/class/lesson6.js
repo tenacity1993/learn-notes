@@ -8,6 +8,7 @@
 }
 {
   let p = document.querySelectorAll('p')
+  console.log('p', typeof p);
   let pArr = Array.from(p);//  将集合转换成数组
   pArr.forEach(function(item){
     console.log(item.textContent);
@@ -59,5 +60,5 @@
   // 数组中是否包含该参数  返回值为布尔值
   console.log('number', [1, 2, NaN].includes(1));
   //ES 5 中NAN 自身互不相等  但是es6中 可以判断是否包含NaN
-  console.log('number', [1, 2, NaN].includes(NaN));
+  // console.log('number', [1, 2, NaN].includes(NaN));
 }

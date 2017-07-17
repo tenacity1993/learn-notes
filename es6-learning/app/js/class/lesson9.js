@@ -24,11 +24,11 @@
     console.log('let of', [key, value]);
   }
 
-  Object.getOwnPropertySymbols(obj).forEach(function(item){
+  Object.getOwnPropertySymbols(obj).forEach((item) => {
     console.log(obj[item]);
   })
 
-  Reflect.ownKeys(obj).forEach(function(item){
+  Reflect.ownKeys(obj).forEach((item) => {
     console.log('ownKeys', item, obj[item]);
   })
 }

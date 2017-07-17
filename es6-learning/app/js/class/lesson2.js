@@ -2,7 +2,7 @@
 {
   let a, b, rest;
   [a, b] = [1, 2];
-  // console.log(a, b);
+  console.log('a=',a, 'b=', b);
 }
 
 {
@@ -13,7 +13,7 @@
 
 {
   let a, b, c;
-  (c = {a, b} = {a: 1, b: 2})
+  c = {a, b} = {a: 1, b: 2}
   console.log(a, b);
   console.log(c);
 }
@@ -82,7 +82,7 @@
     }]
   }
   let {title: esTitle, test:[{title:cnTitle}]} = metaData
-  console.log(esTitle, cnTitle );
+  // console.log(esTitle, cnTitle );
 }
 
 

@@ -85,7 +85,7 @@
   console.log(weakmap.get(o));
 }
 {
-  // 数据结构的横向对比
+  // 数据结构的横向对比.........../
   let map = new Map()
   let array = [];
   // 增

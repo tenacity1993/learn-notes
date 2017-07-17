@@ -36,3 +36,17 @@
     }
 })();
 ```
+
+### Bridge.js
+
+1.
+```javascript
+var slice = Array.prototype.slice;
+// call 第一个参数是this值  其余参数需要将函数参数全部列举出来
+// slice  只有一个参数时返回这个起始位置到数组末尾的所有项
+var args = slice.call(arguments, 1);
+var ecb = args.pop();
+var scb = args.pop();
+// slice 如果没有begin参数 从0开始
+var methodArgs = args.slice();
+```

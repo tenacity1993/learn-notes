@@ -53,18 +53,7 @@
 
 	'use strict';
 
-	var _lesson = __webpack_require__(2);
-
-	var _lesson2 = _interopRequireDefault(_lesson);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	console.log(_lesson2.default.A); // import 'babel-polyfill'
-	// import './class/lesson17'
-
-	// import {A, test, hello} from './class/lesson17'
-	// import {A} from './class/lesson17'
-	// import * as lesson from './class/lesson17' // as 别名
+	__webpack_require__(2);
 
 /***/ }),
 /* 2 */
@@ -72,52 +61,129 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	// export let A = 123
-	//
-	// export function test(){
-	//   console.log('test');
-	// }
-	//
-	// export class hello{
-	//   test(){
-	//     console.log('class');
-	//   }
-	// }
-	//
+	{
+	  var obj = {
+	    time: '2017-03-11',
+	    name: 'net',
+	    _r: 123
+	  };
+	  var monitor = new Proxy(obj, {
+	    // 拦截对象属性的读取
+	    get: function get(target, key) {
+	      return target[key].replace('2017', '2018');
+	    },
 
-	var A = 123;
-	var test = function test() {
-	  console.log('test');
-	};
+	    // 拦截对象设置属性
+	    set: function set(target, key, value) {
+	      if (key === 'name') {
+	        return target[key] = value;
+	      } else {
+	        return target[key];
+	      }
+	    },
 
-	var hello = function () {
-	  function hello() {
-	    _classCallCheck(this, hello);
-	  }
+	    // 拦截key in object 操作
+	    has: function has(target, key) {
+	      if (key === 'name') {
+	        return target[key];
+	      } else {
+	        return false;
+	      }
+	    },
 
-	  _createClass(hello, [{
-	    key: 'test',
-	    value: function test() {
-	      console.log('class');
+	    // 拦截删除操作
+	    // deleteProperty 必须返回一个 Boolean 类型的值，表示了该属性是否被成功删除。
+	    deleteProperty: function deleteProperty(target, key) {
+	      if (key.indexOf('_') > -1) {
+	        delete target[key];
+	        return true;
+	      } else {
+	        return target[key];
+	      }
+	    },
+
+	    // 拦截 Object.keys,Object.getOwnPropertySymbols, Object.getOwnPropertyNames
+	    ownKeys: function ownKeys(target) {
+	      return Object.keys(target).filter(function (item) {
+	        return item != 'time';
+	      });
 	    }
-	  }]);
+	  });
+	  console.log('get', monitor.time);
+	  monitor.time = '2018';
+	  console.log('set', monitor.time);
+	  monitor.name = 'abc';
+	  console.log('set', monitor.time, monitor);
+	  console.log('has', 'name' in monitor, 'time' in monitor);
 
-	  return hello;
-	}();
+	  // delete monitor.time;
+	  // console.log('delete', monitor);
+	  //
+	  // delete monitor._r;
+	  // console.log('delete', monitor);
+	  console.log('ownKeys', Object.keys(monitor));
+	}
+	// 不需要new  直接使用
+	{
+	  var _obj = {
+	    time: '2017-03-11',
+	    name: 'net',
+	    _r: 123
+	  };
+	  console.log('Reflect', Reflect.get(_obj, 'time'));
+	  Reflect.set(_obj, 'name', '123');
+	  console.log(_obj);
+	  console.log('has', Reflect.has(_obj, 'name'));
+	}
+	{
+	  var validator = function validator(target, _validator) {
+	    return new Proxy(target, {
+	      _validator: _validator,
+	      set: function set(target, key, value, proxy) {
+	        if (target.hasOwnProperty(key)) {
+	          var va = this._validator[key];
+	          if (!!va(value)) {
+	            return Reflect.set(target, key, value, proxy);
+	          } else {
+	            throw Error('\u4E0D\u80FD\u8BBE\u7F6E' + key + '\u5230' + value);
+	          }
+	        } else {
+	          throw Error(key + ' \u4E0D\u5B58\u5728');
+	        }
+	      }
+	    });
+	  };
 
-	exports.default = { //default 表示不指定名称
-	  A: A,
-	  test: test,
-	  hello: hello
-	};
+	  var personValidators = {
+	    name: function name(val) {
+	      return typeof val === 'string';
+	    },
+	    age: function age(val) {
+	      return typeof val === 'number' && val > 18;
+	    },
+	    mobile: function mobile(val) {
+	      return typeof val === 'string' || typeof val === 'number';
+	    }
+	  };
+
+	  var Person = function Person(name, age) {
+	    _classCallCheck(this, Person);
+
+	    this.name = name;
+	    this.age = age;
+	    this.mobile = '1111';
+	    return validator(this, personValidators);
+	  };
+
+	  var person = new Person('lilei', 30);
+	  console.log(person);
+	  //  person.name = 48
+	  person.name = 'han meimei';
+	  person.mobile = 123456;
+	  console.log(person);
+	}
 
 /***/ })
 /******/ ]);
