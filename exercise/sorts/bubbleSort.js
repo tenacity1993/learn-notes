@@ -55,7 +55,7 @@ function bubbleSort1(arr) {
                 flag = false   // 发生了交换之后 要设成false
             }
         }
-        if (flag === true) // 如果没有发生交换  则已经排序完成  跳出循环
+        if (flag === true) // 如果循环结束之后没有发生交换  则已经排序完成  跳出循环
             break
     }
     console.timeEnd('增加标志位改进冒泡排序耗时')
