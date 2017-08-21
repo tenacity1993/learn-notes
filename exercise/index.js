@@ -143,6 +143,29 @@ function calNumTimes() {
 }
 
 /* task 4
-*
-*
-* */
+ *Given an array of one's and zero's convert the equivalent binary value to an integer.
+
+ Eg: [0, 0, 0, 1] is treated as 0001 which is the binary representation of 1
+ *
+ * */
+const binaryArrayToNumber = arr => {
+    let temp = 0
+    let len = arr.length
+    for(let i = 0; i < len; i++) {
+        temp += arr[i] * Math.pow(2, len - i - 1)
+    }
+    return temp
+};
+
+const binaryArrayToNumber2 = arr => {
+    let temp = 0
+    let arr2 = [8, 4, 2, 1]
+    for (let i = 0; i < 4; i++) {
+        arr[i] = arr[i] * arr2[i]
+    }
+    temp = arr.reduce((prev, cur) => {
+        return prev + cur
+    })
+    return temp
+};
+// console.log(binaryArrayToNumber2([0, 1, 0, 1]))
