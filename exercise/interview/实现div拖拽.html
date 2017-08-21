@@ -1,0 +1,54 @@
+<!--腾讯面试编程题实现-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实现div拖拽</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #box {
+            position: relative;
+            height: 50px;
+            width: 50px;
+            background-color: #86ffa6;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+
+<script>
+    var box = document.querySelector('#box')
+    box.onmousedown = function (e) {
+        var left = e.clientX - box.offsetLeft
+        var top = e.clientY - box.offsetTop
+
+        document.onmousemove = function (e) {
+            var boxLeft = e.clientX - left
+            var boxTop = e.clientY - top
+            var maxTop = window.innerHeight
+            var maxLeft = window.innerWidth
+            if (boxLeft < 0 || boxTop < 0 || boxLeft > maxLeft || boxTop > maxTop) {
+                alert('移动超出范围')
+                document.onmousemove = null
+            } else {
+                box.style.left = boxLeft + 'px'
+                box.style.top = boxTop + 'px'
+            }
+            console.log(box.style.left, box.style.top)
+        }
+        document.onmouseup = function () {
+            document.onmousemove = null
+            document.onmouseup = null
+        }
+    }
+
+</script>
+</body>
+</html>

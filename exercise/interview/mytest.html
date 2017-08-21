@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .active {
+            color: #ffb367;
+        }
+    </style>
+</head>
+<body>
+<input id="content" type="text">
+<button id="search">搜索</button>
+<ul id="list" style="display: none;">
+    <li>第0项</li>
+    <li>第112项</li>
+    <li>第2123项</li>
+    <li>第3674项</li>
+    <li>第447项</li>
+    <li>第5wert项</li>
+    <li>第6rtw项</li>
+    <li>第7435项</li>
+    <li>第8dfbg项</li>
+    <li>第92345项</li>
+</ul>
+<script>
+    var lis = document.querySelectorAll('li')
+    var ul = document.querySelector('#list')
+    var btn = document.querySelector('#search')
+    var input = document.querySelector('input')
+    var len = lis.length
+    var resul = document.createElement('ul')
+    var pos
+    var tempNode
+    function clear() {
+        for (var i = 0; i < len; i++) {
+            lis[i].style.display = 'none'
+        }
+        ul.style.display = 'none'
+    }
+
+    function removeChild(node) {
+        while (node.hasChildNodes())
+            node.removeChild(node.firstChild)
+    }
+
+
+    function search(data) {
+        removeChild(resul)
+//        clear()
+        var temp = 0
+        for (var i = 0; i < len; i++) {
+            if (lis[i].innerHTML.toLowerCase().indexOf(data) > -1) {
+                var newNode = document.createElement('li')
+                newNode.setAttribute('index', temp)
+                temp++
+                newNode.innerHTML = lis[i].innerHTML
+                resul.appendChild(newNode)
+            }
+        }
+        document.body.appendChild(resul)
+
+    }
+
+    btn.onclick = function () {
+        var txt = document.querySelector('input').value.trim()
+        search(txt)
+    }
+    input.onkeyup = function (e) {
+        var key = e.which
+        if(e.which === 13) {
+            var txt = document.querySelector('input').value.trim()
+            search(txt)
+        }
+    }
+
+    resul.onmouseover = function (e) {
+        console.log(e.target)
+        var txt = document.querySelector('input')
+        var resli = resul.childNodes
+        for (var i = 0; i < resli.length; i++) {
+            resli[i].classList.remove('active')
+        }
+        e.target.classList.add('active')
+//        pos = e.target.getAttribute('index')
+        tempNode = e.target
+        console.log(pos)
+        txt.value = e.target.innerHTML
+    }
+
+    input.onkeyup = function (e) {
+        var key = e.which
+
+        switch (key) {
+            case 38:
+                console.log('top')
+                if (tempNode.getAttribute('index') === '0'){
+                    tempNode = resul.lastChild
+                } else {
+                    tempNode = tempNode.previousSibling
+                }
+                input.value = tempNode.innerHTML
+                var resli = resul.childNodes
+                for (var i = 0; i < resli.length; i++) {
+                    resli[i].classList.remove('active')
+                }
+                tempNode.classList.add('active')
+                break;
+            case 40:
+                console.log('down')
+                if (tempNode.getAttribute('index') === (resul.childNodes.length - 1).toString()){
+                    tempNode = resul.firstChild
+                }
+                input.value = tempNode.nextSibling.innerHTML
+                tempNode = tempNode.nextSibling
+                var resli = resul.childNodes
+                for (var i = 0; i < resli.length; i++) {
+                    resli[i].classList.remove('active')
+                }
+                tempNode.classList.add('active')
+                break
+            default:
+                console.log(123)
+                break
+        }
+    }
+
+    function getPosContent(pos) {
+        var posli = document.querySelector('ul')
+//        var inputTxt =
+    }
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>
