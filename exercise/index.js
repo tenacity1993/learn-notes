@@ -169,3 +169,63 @@ const binaryArrayToNumber2 = arr => {
     return temp
 };
 // console.log(binaryArrayToNumber2([0, 1, 0, 1]))
+
+
+let readline = require('readline')
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
+
+let Num = 2
+let inputs = []
+
+rl.on('line', (input) => {
+    inputs.push(input.trim())
+    if(Num == input.length) {
+        let res = []
+        let s1 = inputs[0].split('')
+        let s2 = inputr[1].split('')
+        let len = s1.length
+        for (let i = 0; i < len; i++) {
+            res.push(s1[i])
+            res.push(s2[len - i - i])
+        }
+        res = res.join('')
+        inputs.length = 0
+        console.log(res)
+    }
+})
+
+// 求中位数
+var readline = require('readline')
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
+
+var num = 0
+var inputs = []
+rl.on('line', function(line) {
+    if(num == 0) {
+       num = parseInt(line.trim())
+    } else {
+        inputs.push(line.trim())
+        if(num == inputs.length) {
+            var res
+            inputs.sort(function(a, b) {
+                return a - b
+            })
+            
+            if(num % 2) {
+                res = inputs[(num - 1) / 2]
+            } else {
+                res = Math.floor((inputs[num / 2] + inputs[num / 2 - 1])  / 2)
+            }
+            
+            console.log(res)
+            inputs.length = 0
+            num = 0            
+        }
+    }
+})
