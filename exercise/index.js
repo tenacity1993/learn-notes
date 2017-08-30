@@ -26,6 +26,7 @@ function myisIsogram(str) {
 function isIsogram1(str) {
     return !/(\w).*\1/i.test(str)
 }
+
 function isIsogram2(str) {
     return !str.match(/([a-z]).*\1/i);
 }
@@ -124,7 +125,8 @@ function calNumTimes() {
         })
         let timeArray = new Array(10).fill(0)
         let divisorArray = []
-        let begin = resArray[0], end = resArray[1]
+        let begin = resArray[0],
+            end = resArray[1]
         for (let i = begin; i <= end; i++) {
             for (let j = 1; j <= i; j++) {
                 if (typeof (i % j) === 'number' && (i % j) == 0) {
@@ -151,7 +153,7 @@ function calNumTimes() {
 const binaryArrayToNumber = arr => {
     let temp = 0
     let len = arr.length
-    for(let i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
         temp += arr[i] * Math.pow(2, len - i - 1)
     }
     return temp
@@ -182,7 +184,7 @@ let inputs = []
 
 rl.on('line', (input) => {
     inputs.push(input.trim())
-    if(Num == input.length) {
+    if (Num == input.length) {
         let res = []
         let s1 = inputs[0].split('')
         let s2 = inputr[1].split('')
@@ -206,26 +208,46 @@ const rl = readline.createInterface({
 
 var num = 0
 var inputs = []
-rl.on('line', function(line) {
-    if(num == 0) {
-       num = parseInt(line.trim())
+rl.on('line', function (line) {
+    if (num == 0) {
+        num = parseInt(line.trim())
     } else {
         inputs.push(line.trim())
-        if(num == inputs.length) {
+        if (num == inputs.length) {
             var res
-            inputs.sort(function(a, b) {
+            inputs.sort(function (a, b) {
                 return a - b
             })
-            
-            if(num % 2) {
+
+            if (num % 2) {
                 res = inputs[(num - 1) / 2]
             } else {
-                res = Math.floor((inputs[num / 2] + inputs[num / 2 - 1])  / 2)
+                res = Math.floor((inputs[num / 2] + inputs[num / 2 - 1]) / 2)
             }
-            
+
             console.log(res)
             inputs.length = 0
-            num = 0            
+            num = 0
         }
     }
 })
+/**
+ * 判断一个书是不是平方数
+ */
+// 呃。。。对比一下自己写的好挫
+var isSquare = function (n) {
+    var temp = parseInt(Math.sqrt(n))
+    if (n == temp * temp) return true
+    else {
+        return false; 
+    }
+}
+
+function isSquare(n) {
+    return Math.sqrt(n) % 1 === 0;
+}
+
+const isSquare = n => Number.isInteger(Math.sqrt(n));
+var isSquare = function (n) {
+    return Number.isInteger(Math.sqrt(n));
+}

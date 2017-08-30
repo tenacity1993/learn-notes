@@ -61,7 +61,7 @@ function bubbleSort1(arr) {
     console.timeEnd('增加标志位改进冒泡排序耗时')
     return arr
 }
-console.log(bubbleSort1(arr1))
+// console.log(bubbleSort1(arr1))
 
 /*
  * 改进冒泡排序 在每趟排序中正反两个方向同时冒泡  使得最大值和最小值归位
@@ -97,6 +97,6 @@ function bubbleSort2(arr) {
     return arr
 }
 // arr2 = [3, 44, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48];
-console.log(bubbleSort2(arr2))
+// console.log(bubbleSort2(arr2))
 
 //  为什么同时运行记录时间和单独记录运行时间不同？
